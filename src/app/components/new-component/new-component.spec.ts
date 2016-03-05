@@ -10,18 +10,18 @@ import {
   beforeEachProviders
 } from 'angular2/testing';
 import {provide} from 'angular2/core';
-import {NewComponent} from './new-component';
+// import {NewComponent} from './new-component';
 
 
-describe('NewComponent Component', () => {
+// describe('NewComponent Component', () => {
 
-  beforeEachProviders((): any[] => []);
+//   beforeEachProviders((): any[] => []);
 
 
-  it('should ...', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-    return tcb.createAsync(NewComponent).then((fixture) => {
-      fixture.detectChanges();
-    });
-  }));
+//   it('should ...', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+//     return tcb.createAsync(NewComponent).then((fixture) => {
+//       fixture.detectChanges();
+//     });
+//   }));
 
-});
+// });

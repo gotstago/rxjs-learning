@@ -8,6 +8,8 @@ import {BehaviorSubject} from 'rxjs/subject/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/zip';
+import { dispatcher,state } from '../../services/todo-service/providers';
+
 
 
 // -- helpers
@@ -21,16 +23,16 @@ function merge(obj1, obj2) {
 
 // -- state
 interface Todo { id: number; text: string; completed: boolean; }
-interface AppState { todos: Todo[]; visibilityFilter: string; }
+export interface AppState { todos: Todo[]; visibilityFilter: string; }
 
 
 // -- actions
-class AddTodoAction       { constructor(public todoId: number, public text: string){} }
-class ToggleTodoAction    { constructor(public id: number){} }
-class SetVisibilityFilter { constructor(public filter: string){} }
-type Action = AddTodoAction|ToggleTodoAction|SetVisibilityFilter;
+export class AddTodoAction       { constructor(public todoId: number, public text: string){} }
+export class ToggleTodoAction    { constructor(public id: number){} }
+export class SetVisibilityFilter { constructor(public filter: string){} }
+export type Action = AddTodoAction|ToggleTodoAction|SetVisibilityFilter;
 
-function getVisibleTodos(todos: Todo[], filter: string): Todo[] {
+export function getVisibleTodos(todos: Todo[], filter: string): Todo[] {
   return todos.filter(t => {
     if (filter === "SHOW_ACTIVE") return !t.completed;
     if (filter === "SHOW_COMPLETED") return t.completed;
@@ -88,15 +90,15 @@ function wrapIntoBehavior(init, obs) {
 
 
 // -- DI config
-const initState = new OpaqueToken("initState");
-const dispatcher = new OpaqueToken("dispatcher");
-const state = new OpaqueToken("state");
+// const initState = new OpaqueToken("initState");
+// export const dispatcher = new OpaqueToken("dispatcher");
+// export const state = new OpaqueToken("state");
 
-export const stateAndDispatcher = [
-  provide(initState, {useValue: {todos: [], visibilityFilter: 'SHOW_ALL'}}),
-  provide(dispatcher, {useValue: new Subject<Action>(null)}),
-  provide(state, {useFactory: stateFn, deps: [new Inject(initState), new Inject(dispatcher)]})
-];
+// export const stateAndDispatcher = [
+//   provide(initState, {useValue: {todos: [], visibilityFilter: 'SHOW_ALL'}}),
+//   provide(dispatcher, {useValue: new Subject<Action>(null)}),
+//   provide(state, {useFactory: stateFn, deps: [new Inject(initState), new Inject(dispatcher)]})
+// ];
 
 
 // -- Components
@@ -106,7 +108,7 @@ export const stateAndDispatcher = [
                {{text}}
              </span>`
 })
-class TodoC {
+export class TodoC {
   @Input() text: string;
   @Input() completed: boolean;
   @Output() toggle = new EventEmitter();
@@ -114,21 +116,21 @@ class TodoC {
   get textEffect() { return this.completed ? 'line-through' : 'none'; }
 }
 
-@Component({
-  selector: 'todo-list',
-  template: `<todo *ngFor="#t of filtered|async"
-                [text]="t.text" [completed]="t.completed"
-                (toggle)="emitToggle(t.id)"></todo>`,
-  directives: [TodoC]
-})
-export class TodoList {
-  constructor(@Inject(dispatcher) private dispatcher: Observer<Action>,
-              @Inject(state) private state: Observable<AppState>) {}
+// @Component({
+//   selector: 'todo-list',
+//   template: `<todo *ngFor="#t of filtered|async"
+//                 [text]="t.text" [completed]="t.completed"
+//                 (toggle)="emitToggle(t.id)"></todo>`,
+//   directives: [TodoC]
+// })
+// export class TodoList {
+//   constructor(@Inject(dispatcher) private dispatcher: Observer<Action>,
+//               @Inject(state) private state: Observable<AppState>) {}
 
-  get filtered() { return this.state.map(s => getVisibleTodos(s.todos, s.visibilityFilter)); }
+//   get filtered() { return this.state.map(s => getVisibleTodos(s.todos, s.visibilityFilter)); }
 
-  emitToggle(id) { this.dispatcher.next(new ToggleTodoAction(id)); }
-}
+//   emitToggle(id) { this.dispatcher.next(new ToggleTodoAction(id)); }
+// }
 
 var nextId = 0;
 @Component({
@@ -164,17 +166,17 @@ class FilterLink {
 })
 export class Footer {}
 
-@Component({
-  selector: 'new-component',
-  template: `
-    <add-todo></add-todo>
-    <todo-list></todo-list>
-    <footer></footer>
-  `,
-  directives: [AddTodo, TodoList, Footer],
-  providers: stateAndDispatcher
-})
-export class NewComponent {}
+// @Component({
+//   selector: 'new-component',
+//   template: `
+//     <add-todo></add-todo>
+//     <todo-list></todo-list>
+//     <footer></footer>
+//   `,
+//   directives: [AddTodo, TodoList, Footer],
+//   providers: stateAndDispatcher
+// })
+// export class NewComponent {}
 
 // enableProdMode();
 // bootstrap(TodoApp)

@@ -1,3 +1,2 @@
-<p>
-  todo-list Works!
-</p>
+<todo *ngFor="#todo of filtered|async" [text]="todo.text" [completed]="todo.completed" (toggle)="emitToggle(todo.id)">
+</todo>
