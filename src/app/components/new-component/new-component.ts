@@ -106,7 +106,7 @@ function wrapIntoBehavior(init, obs) {
   selector: 'todo',
   template: `<span (click)="toggle.next()" [style.textDecoration]="textEffect">
                {{text}}
-             </span>`
+             </span><p>in todoc...</p>`
 })
 export class TodoC {
   @Input() text: string;

@@ -2,6 +2,7 @@ import {Component} from 'angular2/core';
 // import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import { AddTodo, Footer } from './components/new-component/new-component';
 import { TodoList } from './components/todo-list/todo-list';
+import { TodoAdd } from './components/todo-add/todo-add';
 import { TODO_PROVIDERS } from './services/todo-service/providers';
 
 
@@ -9,7 +10,7 @@ import { TODO_PROVIDERS } from './services/todo-service/providers';
   selector: 'redux-two-app',
   providers: [TODO_PROVIDERS],
   templateUrl: 'app/redux-two.html',
-  directives: [AddTodo, TodoList,Footer/*,ROUTER_DIRECTIVES*/],
+  directives: [TodoAdd, TodoList,Footer/*,ROUTER_DIRECTIVES*/],
   pipes: []
 })
 // @RouteConfig([

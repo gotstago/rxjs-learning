@@ -1,8 +1,9 @@
 import {Component,Inject} from 'angular2/core';
-import { TodoC,Action,AppState,getVisibleTodos,ToggleTodoAction } from '../new-component/new-component';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
+import { TodoC,Action,AppState,getVisibleTodos,ToggleTodoAction } from '../new-component/new-component';
 import { TODO_PROVIDERS,dispatcher,state } from '../../services/todo-service/providers';
+import { TodoDetail } from '../todo-detail/todo-detail';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { TODO_PROVIDERS,dispatcher,state } from '../../services/todo-service/pro
   templateUrl: 'app/components/todo-list/todo-list.html',
   styleUrls: ['app/components/todo-list/todo-list.css'],
   providers: [TODO_PROVIDERS],
-  directives: [TodoC],
+  directives: [TodoDetail],
   pipes: []
 })
 export class TodoList {
