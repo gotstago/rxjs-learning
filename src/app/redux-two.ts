@@ -1,17 +1,18 @@
 import {Component} from 'angular2/core';
-import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+// import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import { NewComponent } from './components/new-component/new-component';
 
 
 @Component({
   selector: 'redux-two-app',
   providers: [],
   templateUrl: 'app/redux-two.html',
-  directives: [ROUTER_DIRECTIVES],
+  directives: [NewComponent/*,ROUTER_DIRECTIVES*/],
   pipes: []
 })
-@RouteConfig([
+// @RouteConfig([
 
-])
+// ])
 export class ReduxTwoApp {
   defaultMeaning: number = 42;
   
