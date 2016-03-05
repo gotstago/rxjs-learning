@@ -1,13 +1,13 @@
 import {Component} from 'angular2/core';
 // import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import { NewComponent } from './components/new-component/new-component';
+import { AddTodo, TodoList,Footer, NewComponent, stateAndDispatcher } from './components/new-component/new-component';
 
 
 @Component({
   selector: 'redux-two-app',
-  providers: [],
+  providers: [stateAndDispatcher],
   templateUrl: 'app/redux-two.html',
-  directives: [NewComponent/*,ROUTER_DIRECTIVES*/],
+  directives: [NewComponent,AddTodo, TodoList,Footer/*,ROUTER_DIRECTIVES*/],
   pipes: []
 })
 // @RouteConfig([
