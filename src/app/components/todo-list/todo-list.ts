@@ -1,8 +1,10 @@
 import {Component,Inject} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
-import { TodoC,Action,AppState,getVisibleTodos,ToggleTodoAction } from '../new-component/new-component';
-import { TODO_PROVIDERS,dispatcher,state } from '../../services/todo-service/providers';
+import { dispatcher,state } from '../../services/todo-service/providers';
+import { Action,ToggleTodoAction } from '../../services/todo-service/actions';
+import { AppState } from '../../services/todo-service/state';
+import { getVisibleTodos } from '../../services/todo-service/state-fn';
 import { TodoDetail } from '../todo-detail/todo-detail';
 
 
@@ -10,7 +12,7 @@ import { TodoDetail } from '../todo-detail/todo-detail';
   selector: 'todo-list',
   templateUrl: 'app/components/todo-list/todo-list.html',
   styleUrls: ['app/components/todo-list/todo-list.css'],
-  providers: [TODO_PROVIDERS],
+  providers: [],
   directives: [TodoDetail],
   pipes: []
 })

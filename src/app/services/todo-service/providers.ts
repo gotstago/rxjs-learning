@@ -9,7 +9,7 @@ export const dispatcher = new OpaqueToken("dispatcher");
 export const state = new OpaqueToken("state");
 
 export const TODO_PROVIDERS = [
-  provide(initState, {useValue: {todos: [{id:4,text:'hello',completed:false}], visibilityFilter: 'SHOW_ALL'}}),
+  provide(initState, {useValue: {todos: [/*{id:4,text:'hello',completed:false}*/], visibilityFilter: 'SHOW_ALL'}}),
   provide(dispatcher, {useValue: new Subject<Action>(null)}),
   provide(state, {useFactory: stateFn, deps: [new Inject(initState), new Inject(dispatcher)]})
 ];

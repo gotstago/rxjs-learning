@@ -55,6 +55,15 @@ export function stateFn(initState: AppState, actions: Observable<Action>): Obser
     return wrapIntoBehavior(initState, appStateObs);
 }
 
+export function getVisibleTodos(todos: Todo[], filter: string): Todo[] {
+  return todos.filter(t => {
+    if (filter === "SHOW_ACTIVE") return !t.completed;
+    if (filter === "SHOW_COMPLETED") return t.completed;
+    return true;
+  });
+}
+
+
 function wrapIntoBehavior(init, obs) {
     const res = new BehaviorSubject(init);
     obs.subscribe(s => res.next(s));

@@ -1,5 +1,7 @@
-<!--<todo *ngFor="#todo of filtered|async" [text]="todo.text" [completed]="todo.completed" (toggle)="emitToggle(todo.id)">
-</todo>-->
-<p>help...</p>
-<todo-detail *ngFor="#todo of filtered|async" [text]="todo.text" [completed]="todo.completed" (toggle)="emitToggle(todo.id)"><p>nothing here....</p></todo-detail>
-<p>help...</p>
+
+<todo-detail 
+    *ngFor="#todo of filtered|async" 
+    [text]="todo.text" 
+    [completed]="todo.completed" 
+    (toggle)="emitToggle(todo.id)">
+</todo-detail>
