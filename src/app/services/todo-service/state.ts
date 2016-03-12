@@ -32,6 +32,8 @@ export class Todo implements ITodo {
 export class Game implements IGame {
     id: number;
     name: string;
+    states: GameState[];
+    state: GameState;
     completed: boolean;
 }
 export interface AppState {
