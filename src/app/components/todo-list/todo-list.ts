@@ -3,8 +3,8 @@ import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import { dispatcher,state } from '../../services/todo-service/providers';
 import { Action,ToggleTodoAction } from '../../services/todo-service/actions';
-import { AppState } from '../../services/todo-service/state';
-import { getVisibleTodos } from '../../services/todo-service/state-fn';
+import { AppState,Todo } from '../../services/todo-service/state';
+//import { getVisibleTodos } from '../../services/todo-service/state-fn';
 import { TodoDetail } from '../todo-detail/todo-detail';
 
 
@@ -20,7 +20,25 @@ export class TodoList {
   constructor(@Inject(dispatcher) private dispatcher: Observer<Action>,
               @Inject(state) private state: Observable<AppState>) {}
 
-  get filtered() { return this.state.map(s => getVisibleTodos(s.todos, s.visibilityFilter)); }
+  get filtered() { //returns Todo[] Observable - no need to call subscribe since the filter in html will
+      return this.state.map(s => //current AppState
+        getVisibleTodos(s.todos, s.visibilityFilter)//mapping AppState to Todo[]
+      ); 
+  }
 
-  emitToggle(id) { this.dispatcher.next(new ToggleTodoAction(id)); }
+  emitToggle(id) { 
+      this.dispatcher.next(
+          new ToggleTodoAction(id)
+      ); 
+  }
 }
+
+
+function getVisibleTodos(todos: Todo[], filter: string): Todo[] {
+  return todos.filter(t => {
+    if (filter === "SHOW_ACTIVE") return !t.completed;
+    if (filter === "SHOW_COMPLETED") return t.completed;
+    return true;
+  });
+}
+

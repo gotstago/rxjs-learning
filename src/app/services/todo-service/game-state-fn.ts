@@ -2,8 +2,8 @@ import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {BehaviorSubject} from 'rxjs/subject/BehaviorSubject';
 
-import { Todo, AppState } from './state';
-import { Action, AddTodoAction, ToggleTodoAction, SetVisibilityFilter } from './actions';
+import { Todo, AppState, GameAppState, Game } from './state';
+import { Action, AddTodoAction, ToggleTodoAction, SetVisibilityFilter,AddCardGameAction } from './actions';
 
 // -- helpers
 function merge(obj1, obj2) {
@@ -14,26 +14,26 @@ function merge(obj1, obj2) {
 }
 
 // -- statefn
-function todos(initState: Todo[], actions: Observable<Action>): Observable<Todo[]> {
-    console.log('starting todos...');
+function games(initState: Game[], actions: Observable<Action>): Observable<Game[]> {
+    console.log('starting games...');
     return actions.scan((state, action) => {//read each AppState as it gets updated - for every action from app
         console.log('in scan...');
-        if (action instanceof AddTodoAction) {
-            const newTodo = { id: action.todoId, text: action.text, completed: false };
-            return [...state, newTodo];
+        if (action instanceof AddCardGameAction) {
+            const newGame = { id: action.gameId, name: action.name, completed: false };
+            return [...state, newGame];
         } else {
-            return state.map(t => updateTodo(t, action));
+            return state.map(g => updateGame(g, action));
         }
     }, initState);
 }
 
-function updateTodo(todo: Todo, action: Action): Todo {
+function updateGame(game: Game, action: Action): Game {
     if (action instanceof ToggleTodoAction) {
         // merge creates a new object using the properties of the passed in objects
-        return (action.id !== todo.id) ? todo : merge(todo, { completed: !todo.completed }) as Todo;
+        return (action.id !== game.id) ? game : merge(game, { completed: !game.completed }) as Game;
 
     } else {
-        return todo;
+        return game;
     }
 }
 
@@ -49,14 +49,14 @@ function filter(initState: string, actions: Observable<Action>): Observable<stri
     }, initState);
 }
 
-export function stateFn(initState: AppState, actions: Observable<Action>): Observable<AppState> {
-    console.log('starting stateFn...');
+export function gameStateFn(initState: GameAppState, actions: Observable<Action>): Observable<GameAppState> {
+    console.log('starting gameStateFn...');
 
-    const combine = s => ({ todos: s[0], visibilityFilter: s[1] });
+    const combine = s => ({ games: s[0], visibilityFilter: s[1] });
 
-    const appStateObs: Observable<AppState> = 
-        todos(initState.todos, actions).
-        zip(filter(initState.visibilityFilter, actions)).//zip combines todos result with filter result
+    const appStateObs: Observable<GameAppState> = 
+        games(initState.games, actions).
+        zip(filter(initState.visibilityFilter, actions)).//zip combines games result with filter result
         map(combine);
     
     return wrapIntoBehavior(initState, appStateObs);

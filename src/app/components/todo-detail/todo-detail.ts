@@ -16,7 +16,9 @@ export class TodoDetail {
     @Input() completed: boolean;
     @Output() toggle = new EventEmitter();
 
-    get textEffect() { return this.completed ? 'line-through' : 'none'; }
+    get textEffect() { 
+        return this.completed ? 'line-through' : 'none'; 
+    }
 
 }
 
