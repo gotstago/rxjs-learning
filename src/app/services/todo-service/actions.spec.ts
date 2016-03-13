@@ -30,8 +30,8 @@ describe('TodoService Service', () => {
 
         states.subscribe(s => {
             expect(s.games.length).toEqual(2);
-            expect(s.games[0]).toEqual({ id: 100, name: 'tarabish', completed: false });
-            expect(s.games[1]).toEqual({ id: 101, name: 'tarabish', completed: false });
+            expect(s.games[0]).toEqual({ id: 100, name: 'tarabish', completed: false,table:null,history:[] });
+            expect(s.games[1]).toEqual({ id: 101, name: 'tarabish', completed: false,table:null,history:[] });
         });
     });
 

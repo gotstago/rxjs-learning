@@ -19,7 +19,8 @@ function games(initState: Game[], actions: Observable<Action>): Observable<Game[
     return actions.scan((state, action) => {//read each AppState as it gets updated - for every action from app
         console.log('in scan...');
         if (action instanceof AddCardGameAction) {
-            const newGame = { id: action.gameId, name: action.name, completed: false };
+            const newTable = {id:action.gameId,cards:[],completed:false}
+            const newGame = { id: action.gameId, name: action.name, completed: false, table: newTable, history:[newTable] };
             return [...state, newGame];
         } else {
             return state.map(g => updateGame(g, action));
